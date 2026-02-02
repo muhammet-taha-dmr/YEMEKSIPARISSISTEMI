@@ -1,4 +1,5 @@
 
+package com.yemek;
 
 public class MenuItem {
     private int id;
