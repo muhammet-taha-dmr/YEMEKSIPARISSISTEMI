@@ -1,0 +1,29 @@
+flowchart LR
+    User((Customer))
+
+    subgraph "Food Ordering System"
+        ViewRestaurants[View Restaurants]
+        ViewMenu[View Menu]
+        SelectItem[Select Item & Quantity]
+        PlaceOrder[Place Order]
+        ApplyDiscount[Apply Discount]
+        MakePayment[Make Payment]
+        RateRestaurant[Rate Restaurant]
+        
+        PayCash[Pay with Cash]
+        PayCard[Pay with Credit Card]
+        PayWallet[Pay with Digital Wallet]
+    end
+
+    User --> ViewRestaurants
+    ViewRestaurants --> ViewMenu
+    ViewMenu --> SelectItem
+    SelectItem --> PlaceOrder
+    PlaceOrder --> ApplyDiscount
+    ApplyDiscount --> MakePayment
+    
+    MakePayment -.-> PayCash
+    MakePayment -.-> PayCard
+    MakePayment -.-> PayWallet
+    
+    MakePayment --> RateRestaurant

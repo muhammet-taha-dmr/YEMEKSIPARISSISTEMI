@@ -1,0 +1,87 @@
+classDiagram
+    %% Relations
+    User <|-- Customer
+    Payment <|.. CashPayment
+    Payment <|.. CreditCardPayment
+    Payment <|.. DigitalWalletPayment
+    
+    Restaurant "1" *-- "*" MenuItem : has
+    Order "1" *-- "*" OrderItem : contains
+    OrderItem "1" --> "1" MenuItem : references
+    
+    %% Main associations (implied by usage)
+    Customer ..> Order : places
+    Restaurant ..> MenuItem : manages
+
+    class User {
+        #int userId
+        #String name
+        #String phoneNumber
+        +User(int userId, String name, String phoneNumber)
+        +getName() String
+    }
+
+    class Customer {
+        -String address
+        +Customer(int userId, String name, String phoneNumber, String address)
+        +getAddress() String
+    }
+
+    class Restaurant {
+        -String name
+        -List~MenuItem~ menuItems
+        -List~Integer~ ratings
+        +Restaurant(String name)
+        +addMenuItem(MenuItem item)
+        +showMenu()
+        +getMenuItemById(int id) MenuItem
+        +addRating(int rating)
+        +getAverageRating() double
+        +getName() String
+    }
+
+    class MenuItem {
+        -int id
+        -String name
+        -double price
+        +MenuItem(int id, String name, double price)
+        +getId() int
+        +getName() String
+        +getPrice() double
+    }
+
+    class Order {
+        -List~OrderItem~ items
+        -double discountRate
+        +Order()
+        +addItem(MenuItem item, int quantity)
+        +applyDiscount(String code)
+        +getTotal() double
+        +printOrder()
+    }
+
+    class OrderItem {
+        -MenuItem item
+        -int quantity
+        +OrderItem(MenuItem item, int quantity)
+        +getSubtotal() double
+        +toString() String
+    }
+
+    class Payment {
+        <<interface>>
+        +pay(double amount) boolean
+    }
+
+    class CashPayment {
+        +pay(double amount) boolean
+    }
+
+    class CreditCardPayment {
+        +pay(double amount) boolean
+    }
+
+    class DigitalWalletPayment {
+        -double balance
+        +pay(double amount) boolean
+    }
